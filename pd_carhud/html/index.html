@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script src="main.js"></script>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./styles.css">
+    <script src="https://kit.fontawesome.com/434abb14ce.js" crossorigin="anonymous"></script>
+    <script src="nui://game/ui/jquery.js" type="text/javascript"></script>
+    <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+</head>
+<body>
+    <div class="ui" id="ui">
+        <div class="velocimeter">
+            <h1 class="velocity" id="velocity">0</h1>
+            <h1 class="gear" id="gear">GEAR 0</h1>
+        </div>
+
+        <div class="fuel">
+            <i class="fas fa-gas-pump"></i>
+            <h2 class="fuel-level" id="fuel-level">000</h2>
+        </div>
+
+        <div class="vehicle_state">
+            <i class="fas fa-wrench"></i>
+            <h2 class="state-level" id="state-level">000</h2>
+        </div>
+    </div>
+
+    <script>
+        $(document).ready(function(){
+            window.addEventListener("message", function(event){
+                 if(event.data.action == "show") {
+                    var selector = document.getElementById("ui");
+                    selector.style = "display:block";
+                    $(".ui").addClass('inCar');
+                    $("#velocity").html(Math.round(event.data.showSpeed));
+                    $("#gear").html(event.data.showGear);
+                    $("#fuel-level").html(Math.round(event.data.showFuel));
+                    $("#state-level").html(Math.round(event.data.showVehicleState));
+                } else if (event.data.action == "hide") {
+                    var selector = document.getElementById("ui");
+                    selector.style = "display:none";
+                } 
+
+            })
+        })
+    </script>
+</body>
+</html>
